@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import StockChart from '../components/Stockchart';
 import styles from '../styles/Home.module.css'
 
 const Home = () => {
@@ -11,7 +10,6 @@ const Home = () => {
       </Head>
 
       <main className={styles.main}>
-        <StockChart />
       </main>
 
       <footer className={styles.footer}>
