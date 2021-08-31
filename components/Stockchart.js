@@ -21,7 +21,9 @@ const StockChart = () => {
     const fetchStockData = async () => {
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_INTRADAYS_1MIN_URL, {
+          process.env.ALPHA_URL ||
+            process.env.NEXT_PUBLIC_ALPHA_URL,
+          {
             params: {
               function: 'TIME_SERIES_INTRADAY',
               symbol: 'MSFT',
@@ -29,9 +31,9 @@ const StockChart = () => {
               adjusted: 'true',
               outputsize: 'full',
               datatype: 'json',
-              apikey: process.env.NEXT_PUBLIC_APIKEY,
-              
-            }
+              apikey:
+                process.env.ALPHA_KEY || process.env.NEXT_PUBLIC_ALPHA_APIKEY,
+            },
           }
         );
 
@@ -62,7 +64,6 @@ const StockChart = () => {
 
         setohlc(ohlcCollection);
         setVolume(volumeCollection);
-
       } catch (error) {
         console.error(error);
       }
