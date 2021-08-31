@@ -1,6 +1,5 @@
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
-import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 
@@ -13,64 +12,62 @@ const timeSeries = {
   volume: '5. volume',
 };
 
-const StockChart = () => {
-  const [ohlc, setohlc] = useState([]);
-  const [volume, setVolume] = useState([]);
+const fetchStockData = async () => {
 
-  useEffect(() => {
-    const fetchStockData = async () => {
-      try {
-        const response = await axios.get(
-          process.env.ALPHA_URL ||
-            process.env.NEXT_PUBLIC_ALPHA_URL,
-          {
-            params: {
-              function: 'TIME_SERIES_INTRADAY',
-              symbol: 'MSFT',
-              interval: '1min',
-              adjusted: 'true',
-              outputsize: 'full',
-              datatype: 'json',
-              apikey:
-                process.env.ALPHA_KEY || process.env.NEXT_PUBLIC_ALPHA_APIKEY,
-            },
-          }
-        );
-
-        const dataCollection = response.data[timeSeries.oneMin];
-
-        if (!dataCollection) {
-          throw response.data;
-        }
-
-        const dates = _.keys(dataCollection);
-        const ohlcCollection = [];
-        const volumeCollection = [];
-
-        _.forEachRight(dates, (date) => {
-          ohlcCollection.push([
-            new Date(date).getTime(),
-            Number(dataCollection[date][timeSeries.open]),
-            Number(dataCollection[date][timeSeries.high]),
-            Number(dataCollection[date][timeSeries.low]),
-            Number(dataCollection[date][timeSeries.close]),
-          ]);
-
-          volumeCollection.push([
-            new Date(date).getTime(),
-            Number(dataCollection[date][timeSeries.volume]),
-          ]);
-        });
-
-        setohlc(ohlcCollection);
-        setVolume(volumeCollection);
-      } catch (error) {
-        console.error(error);
+  try {
+    const response = await axios.get(
+      process.env.ALPHA_URL ||
+        process.env.NEXT_PUBLIC_ALPHA_URL,
+      {
+        params: {
+          function: 'TIME_SERIES_INTRADAY',
+          symbol: 'MSFT',
+          interval: '1min',
+          adjusted: 'true',
+          outputsize: 'full',
+          datatype: 'json',
+          apikey:
+            process.env.ALPHA_KEY || process.env.NEXT_PUBLIC_ALPHA_APIKEY,
+        },
       }
-    };
+    );
 
-    fetchStockData();
-  }, []);
+    const dataCollection = response.data[timeSeries.oneMin];
+
+    if (!dataCollection) {
+      throw response.data;
+    }
+
+    const dates = _.keys(dataCollection);
+    const ohlcCollection = [];
+    const volumeCollection = [];
+
+    _.forEachRight(dates, (date) => {
+      ohlcCollection.push([
+        new Date(date).getTime(),
+        Number(dataCollection[date][timeSeries.open]),
+        Number(dataCollection[date][timeSeries.high]),
+        Number(dataCollection[date][timeSeries.low]),
+        Number(dataCollection[date][timeSeries.close]),
+      ]);
+
+      volumeCollection.push([
+        new Date(date).getTime(),
+        Number(dataCollection[date][timeSeries.volume]),
+      ]);
+    });
+
+    console.log('ohlc:', ohlcCollection);
+    console.log('volume', volumeCollection);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const StockChart = () => {
+  const ohlc = [];
+  const volume = [];
 
   const options = {
     yAxis: [
@@ -166,6 +163,7 @@ const StockChart = () => {
         constructorType={'stockChart'}
         options={options}
       />
+      <button onClick={fetchStockData}> Get Data </button>
     </div>
   );
 };
