@@ -2,49 +2,58 @@ import axios from 'axios';
 import _ from 'lodash';
 
 export default async function handler(req, res) {
+  const ohlcCollection = [];
+  const volumeCollection = [];
   const url = process.env.ALPHA_URL;
   const apikey = process.env.ALPHA_APIKEY;
-
   const timeSeries = {
-    oneMin: 'Time Series (1min)',
+    error: 'Error Message',
+    daily: 'Time Series (Daily)',
     open: '1. open',
     high: '2. high',
     low: '3. low',
     close: '4. close',
-    volume: '5. volume',
+    adjustedClose: '5. adjusted close',
+    volume: '6. volume',
+    dividendAmount: '7. dividend amount',
+    splitCoefficient: '8. split coefficient',
   };
 
-  const response = await axios.get(url, {
-    params: {
-      function: 'TIME_SERIES_INTRADAY',
-      symbol: 'MSFT',
-      interval: '1min',
-      adjusted: 'true',
-      outputsize: 'full',
-      datatype: 'json',
-      apikey,
-    },
-  });
+  try {
+    const response = await axios.get(url, {
+      params: {
+        function: 'TIME_SERIES_DAILY_ADJUSTED',
+        symbol: 'MSFT',
+        outputsize: 'full',
+        datatype: 'json',
+        apikey,
+      },
+    });
 
-  const dataCollection = response.data[timeSeries.oneMin];
-  const dates = _.keys(dataCollection);
-  const ohlcCollection = [];
-  const volumeCollection = [];
+    if (response.data && response.data[timeSeries.error]) {
+      throw new Error(response.data[timeSeries.error]);
+    }
 
-  _.forEachRight(dates, (date) => {
-    ohlcCollection.push([
-      new Date(date).getTime(),
-      Number(dataCollection[date][timeSeries.open]),
-      Number(dataCollection[date][timeSeries.high]),
-      Number(dataCollection[date][timeSeries.low]),
-      Number(dataCollection[date][timeSeries.close]),
-    ]);
+    const dataCollection = response.data[timeSeries.daily];
+    const dates = _.keys(dataCollection);
 
-    volumeCollection.push([
-      new Date(date).getTime(),
-      Number(dataCollection[date][timeSeries.volume]),
-    ]);
-  });
+    _.forEachRight(dates, (date) => {
+      ohlcCollection.push([
+        new Date(date).getTime(),
+        Number(dataCollection[date][timeSeries.open]),
+        Number(dataCollection[date][timeSeries.high]),
+        Number(dataCollection[date][timeSeries.low]),
+        Number(dataCollection[date][timeSeries.close]),
+      ]);
 
+      volumeCollection.push([
+        new Date(date).getTime(),
+        Number(dataCollection[date][timeSeries.volume]),
+      ]);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  
   res.status(200).json({ ohlcCollection, volumeCollection });
 }

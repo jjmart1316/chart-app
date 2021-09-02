@@ -9,8 +9,6 @@ const StockChart = () => {
 
   const requestData = async () => {
     const response = await axios.get('api/stockData');
-    console.log('browser response:', response)
-
     const { ohlcCollection, volumeCollection } = response.data;
     setOhlc(ohlcCollection);
     setVolume(volumeCollection);
