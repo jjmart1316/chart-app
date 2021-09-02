@@ -1,80 +1,20 @@
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
-import _ from 'lodash';
 import axios from 'axios';
 import { useState } from 'react';
 
-const timeSeries = {
-  oneMin: 'Time Series (1min)',
-  open: '1. open',
-  high: '2. high',
-  low: '3. low',
-  close: '4. close',
-  volume: '5. volume',
-};
-
-const fetchStockData = async () => {
-  const url = process.env.ALPHA_URL || process.env.NEXT_PUBLIC_ALPHA_URL;
-  const apikey = process.env.ALPHA_KEY || process.env.NEXT_PUBLIC_ALPHA_APIKEY;
-
-  try {
-    const response = await axios.get(url, {
-        params: {
-          function: 'TIME_SERIES_INTRADAY',
-          symbol: 'MSFT',
-          interval: '1min',
-          adjusted: 'true',
-          outputsize: 'full',
-          datatype: 'json',
-          apikey,
-        },
-      }
-    );
-
-    const dataCollection = response.data[timeSeries.oneMin];
-    if (!dataCollection) {
-      throw response.data;
-    }
-
-    const dates = _.keys(dataCollection);
-    const ohlcCollection = [];
-    const volumeCollection = [];
-
-    _.forEachRight(dates, (date) => {
-      ohlcCollection.push([
-        new Date(date).getTime(),
-        Number(dataCollection[date][timeSeries.open]),
-        Number(dataCollection[date][timeSeries.high]),
-        Number(dataCollection[date][timeSeries.low]),
-        Number(dataCollection[date][timeSeries.close]),
-      ]);
-
-      volumeCollection.push([
-        new Date(date).getTime(),
-        Number(dataCollection[date][timeSeries.volume]),
-      ]);
-    });
-
-    return {
-      ohlcCollection,
-      volumeCollection,
-    };
-
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const StockChart = () => {
-
-  const [ ohlc, setOhlc ] = useState([]);
+  const [ohlc, setOhlc] = useState([]);
   const [volume, setVolume] = useState([]);
 
   const requestData = async () => {
-    const datapoints = await fetchStockData();
-    setOhlc(datapoints.ohlcCollection);
-    setVolume(datapoints.volumeCollection)
-  }
+    const response = await axios.get('api/stockData');
+    console.log('browser response:', response)
+
+    const { ohlcCollection, volumeCollection } = response.data;
+    setOhlc(ohlcCollection);
+    setVolume(volumeCollection);
+  };
 
   const options = {
     yAxis: [
