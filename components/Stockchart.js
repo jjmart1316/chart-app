@@ -8,7 +8,7 @@ const StockChart = () => {
   const [volume, setVolume] = useState([]);
 
   const requestData = async () => {
-    const response = await axios.get('api/stockData');
+    const response = await axios.get('api/timeSeries/dailyAdjusted');
     const { ohlcCollection, volumeCollection } = response.data;
     setOhlc(ohlcCollection);
     setVolume(volumeCollection);

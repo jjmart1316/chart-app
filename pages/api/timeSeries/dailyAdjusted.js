@@ -42,7 +42,7 @@ export default async function handler(_req, res) {
         Number(dataCollection[date][timeSeries.open]),
         Number(dataCollection[date][timeSeries.high]),
         Number(dataCollection[date][timeSeries.low]),
-        Number(dataCollection[date][timeSeries.close]),
+        Number(dataCollection[date][timeSeries.adjustedClose]),
       ]);
       volumeCollection.push([
         new Date(date).getTime(),
