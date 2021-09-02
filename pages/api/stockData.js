@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-export default async function handler(req, res) {
+export default async function handler(_req, res) {
   const ohlcCollection = [];
   const volumeCollection = [];
   const timeSeries = {
