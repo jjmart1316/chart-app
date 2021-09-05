@@ -1,21 +1,25 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import Link from 'next/link';
 
 const Home = () => {
   return (
-    <div >
-      <Head>
-        <title>Chart App</title>
-        <meta name="description" content="Chart App / PNW Senior Design Project" />
+    <div>
+      <Head >
+        <title>Home</title>
       </Head>
+        <main>
 
-      <main >
-      </main>
 
-      <footer >
 
-      </footer>
+
+
+          <Link href='/stockChart'>
+            <a>Stock Chart</a>
+          </Link>
+          
+        </main>
     </div>
-  )
+  );
 };
 
 export default Home;
