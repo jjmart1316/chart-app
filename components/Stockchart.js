@@ -88,17 +88,6 @@ const StockChart = () => {
     setChart((prevState) => ({ ...prevState, series, title }));
   };
 
-  const updateChartType = () => {
-    setChart((prevState) => ({
-      // Todo: chart a selection type for user
-      ...prevState,
-      chart: {
-        ...prevState.chart,
-        type: 'line' 
-      },
-    }));
-  };
-
   return (
     <div>
       <HighchartsReact
@@ -108,9 +97,6 @@ const StockChart = () => {
       />
       <Button variant='contained' onClick={requestData}>
         Get Data
-      </Button>
-      <Button variant='contained' onClick={updateChartType}>
-        Change chart type
       </Button>
     </div>
   );
