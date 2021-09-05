@@ -18,7 +18,7 @@ const timeSeries = {
 };
 
 export default async function handler(req, res) {
-  const { chartType } = req.query;
+  // const { chartType } = req.query;
   let metadata = {};
   const ohlc = [];
   const volume = [];
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
   res.status(200).json({
     series: [
       {
-        type: chartType,
+        // type: chartType,
         data: ohlc,
         name: metadata[timeSeries.symbol],
       },
