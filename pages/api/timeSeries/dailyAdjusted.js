@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         Number(dataCollection[date][timeSeries.open]),
         Number(dataCollection[date][timeSeries.high]),
         Number(dataCollection[date][timeSeries.low]),
-        Number(dataCollection[date][timeSeries.adjustedClose]),
+        Number(dataCollection[date][timeSeries.close]),
       ]);
     });
   } catch (error) {
