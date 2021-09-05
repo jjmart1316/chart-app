@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core';
+import { Button, Container } from '@material-ui/core';
 import StockChart from '../components/Stockchart';
 
 const stockChart = () => {
@@ -9,6 +9,7 @@ const stockChart = () => {
     <div>
       <Container>
         <StockChart  />
+        <Button variant='contained'>Hello</Button>
       </Container>
     </div>
   );

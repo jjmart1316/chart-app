@@ -53,6 +53,7 @@ const StockChart = () => {
           'currentPriceIndicator',
           'typeChange',
           'fullScreen',
+          'zoomChange',
           'separator',
           'simpleShapes',
           'lines',
@@ -63,8 +64,6 @@ const StockChart = () => {
           'separator',
           'verticalLabels',
           'flags',
-          'separator',
-          'zoomChange',
           'separator',
         ],
         definitions: {
