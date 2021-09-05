@@ -18,10 +18,8 @@ const timeSeries = {
 };
 
 export default async function handler(req, res) {
-  // const { chartType } = req.query;
   let metadata = {};
   const ohlc = [];
-  const volume = [];
 
   try {
     const response = await axios.get(process.env.ALPHA_URL, {
@@ -43,10 +41,6 @@ export default async function handler(req, res) {
         Number(dataCollection[date][timeSeries.high]),
         Number(dataCollection[date][timeSeries.low]),
         Number(dataCollection[date][timeSeries.adjustedClose]),
-      ]);
-      volume.push([
-        new Date(date).getTime(),
-        Number(dataCollection[date][timeSeries.volume]),
       ]);
     });
   } catch (error) {

@@ -1,12 +1,24 @@
 import Highcharts from 'highcharts/highstock';
 import NoDataToDisplay from 'highcharts/modules/no-data-to-display';
+import indicatorsAll from "highcharts/indicators/indicators-all";
+import annotationsAdvanced from "highcharts/modules/annotations-advanced";
+import priceIndicator from "highcharts/modules/price-indicator";
+import fullScreen from "highcharts/modules/full-screen";
+import stockTools from "highcharts/modules/stock-tools";
 import HighchartsReact from 'highcharts-react-official';
 import axios from 'axios';
 import { useState } from 'react';
 import { Button } from '@material-ui/core';
 
 //init the module
-NoDataToDisplay(Highcharts);
+if (typeof Highcharts === 'object') {
+  NoDataToDisplay(Highcharts);
+  indicatorsAll(Highcharts);
+  annotationsAdvanced(Highcharts);
+  priceIndicator(Highcharts);
+  fullScreen(Highcharts);
+  stockTools(Highcharts);
+}
 
 const StockChart = () => {
   const [chart, setChart] = useState({
