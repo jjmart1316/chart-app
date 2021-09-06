@@ -8,11 +8,6 @@ const Home = () => {
         <title>Home</title>
       </Head>
         <main>
-
-
-
-
-
           <Link href='/stockChart'>
             <a>Stock Chart</a>
           </Link>
