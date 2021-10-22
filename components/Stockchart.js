@@ -10,9 +10,9 @@ import 'highcharts/css/stocktools/gui.css';
 import 'highcharts/css/annotations/popup.css';
 import axios from 'axios';
 import { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
-//init the module
+//init chart module
 if (typeof Highcharts === 'object') {
   NoDataToDisplay(Highcharts);
   HighchartsMore(Highcharts);

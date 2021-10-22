@@ -1,21 +1,17 @@
 import Head from 'next/head';
-import Link from 'next/link';
-import Login from '../components/Login';
-import Signup from '../components/Signup';
+import Link from '@mui/material/Link';
 
 const Home = () => {
   return (
     <div>
-      <Head >
+      <Head>
         <title>Home</title>
       </Head>
-      
-      <Signup />
-        {/* <main>
-          <Link href='/stockChart'>
-            <a>Stock Chart</a>
-          </Link>
-        </main> */}
+      <main>
+        <Link href='/stockChart'>
+          <a>Stock Chart</a>
+        </Link>
+      </main>
     </div>
   );
 };

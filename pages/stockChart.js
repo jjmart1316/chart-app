@@ -1,4 +1,4 @@
-import { Button, Container } from '@material-ui/core';
+import { Button, Container } from '@mui/material';
 import StockChart from '../components/Stockchart';
 import StockChartForm from '../components/StockChartForm';
 

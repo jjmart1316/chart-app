@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormControl, InputLabel, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
-import { Select } from 'formik-material-ui';
+import { Select } from 'formik-mui';
 
 const StockChartForm = ({ children }) => {
   const wrapper = React.createRef();

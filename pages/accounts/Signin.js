@@ -1,21 +1,21 @@
 import {
+  Link,
   Button,
-  Box,
   Container,
+  Box,
+  Stack,
   Avatar,
   Typography,
   Grid,
-  Stack,
   LinearProgress,
-  Link,
 } from '@mui/material';
-import styles from '../styles/Signup.module.scss';
 import LockOutlined from '@mui/icons-material/LockOutlined';
-import { Field, Form, Formik } from 'formik';
-import { TextField } from 'formik-mui';
 import { deepPurple } from '@mui/material/colors';
+import { Form, Formik, Field } from 'formik';
+import { TextField } from 'formik-mui';
+import styles from '../../styles/Signin.module.scss';
 
-const Signup = () => {
+const Signin = () => {
   return (
     <Container maxWidth='xs'>
       <Box className={styles.outerBox}>
@@ -25,16 +25,14 @@ const Signup = () => {
           </Avatar>
         </Stack>
         <Typography component='h1' variant='h5'>
-          Sign up
+          Sign In
         </Typography>
       </Box>
       <Box className={styles.formContainer}>
         <Formik
           initialValues={{
-            email: '',
+            username: '',
             password: '',
-            userName: '',
-            confirmPassword: '',
           }}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -59,31 +57,9 @@ const Signup = () => {
                 <Grid item xs={12}>
                   <Field
                     component={TextField}
-                    name='email'
-                    type='email'
-                    label='Email'
-                    autoComplete='email'
-                    required
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
                     name='password'
                     type='password'
                     label='Password'
-                    autoComplete='new-password'
-                    required
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
-                    name='confirmPassword'
-                    type='password'
-                    label='Confirm Password'
                     autoComplete='new-password'
                     required
                     fullWidth
@@ -99,13 +75,17 @@ const Signup = () => {
                 disabled={props.isSubmitting}
                 onClick={props.submitForm}
               >
-                Sign Up
+                Sign In
               </Button>
-
-              <Grid container className={styles.accountSignin} >
+              <Grid container>
+                <Grid item xs>
+                  <Link href='#' variant='body2'>
+                    Forgot password?
+                  </Link>
+                </Grid>
                 <Grid item>
                   <Link href='#' variant='body2'>
-                    Already have an account? Sign in
+                    {`Don't have an account? Sign Up`}
                   </Link>
                 </Grid>
               </Grid>
@@ -118,4 +98,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;
