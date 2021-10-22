@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Login from '../components/Login';
+import Signup from '../components/Signup';
 
 const Home = () => {
   return (
@@ -7,12 +9,13 @@ const Home = () => {
       <Head >
         <title>Home</title>
       </Head>
-        <main>
+      
+      <Signup />
+        {/* <main>
           <Link href='/stockChart'>
             <a>Stock Chart</a>
           </Link>
-          
-        </main>
+        </main> */}
     </div>
   );
 };
