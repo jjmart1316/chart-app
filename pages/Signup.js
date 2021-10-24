@@ -16,8 +16,18 @@ import { TextField } from 'formik-mui';
 import { deepPurple } from '@mui/material/colors';
 import { hash } from 'bcryptjs';
 import axios from 'axios';
+import {
+  UserSignupInitialValues,
+  UserSignupSchema,
+} from '../models/formValidations/User';
 
 const Signup = () => {
+  const createUser = async ({ username, email, password }) => {
+    return  axios.post('api/users', {
+      params: { username, email, password: await hash(password, 12) },
+    });
+  };
+
   return (
     <Container maxWidth='xs'>
       <Box className={styles.outerBox}>
@@ -32,20 +42,12 @@ const Signup = () => {
       </Box>
       <Box className={styles.formContainer}>
         <Formik
-          initialValues={{
-            username: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-          }}
+          initialValues={UserSignupInitialValues}
+          validationSchema={UserSignupSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            const response = await axios.post('api/users', {
-              params: { ...values, password: await hash(values.password, 12) },
-            });
 
-
+            const response = await createUser(values);
             console.log('response:', response);
-
 
             setTimeout(() => {
               setSubmitting(false);

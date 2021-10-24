@@ -16,18 +16,23 @@ import { TextField } from 'formik-mui';
 import styles from '../styles/Signin.module.scss';
 import axios from 'axios';
 import { compare } from 'bcryptjs';
+import {
+  UserSigninInitialValues,
+  UserSignSchema,
+} from '../models/formValidations/User';
 
 const Signin = () => {
   const fetchUser = async (username) => {
-    return await axios.get('api/users', { params: { username } });
+    return axios.get('api/users', { params: { username } });
   };
 
   const validateUser = async (data, inputValues) => {
     if (!data.query) {
       return false;
     }
-    return await compare(inputValues?.password, data.query.password);
-  }
+    return compare(inputValues?.password, data.query.password);
+  };
+
 
   return (
     <Container maxWidth='xs'>
@@ -43,16 +48,18 @@ const Signin = () => {
       </Box>
       <Box className={styles.formContainer}>
         <Formik
-          initialValues={{
-            username: '',
-            password: '',
-          }}
-          onSubmit={async (values, { setSubmitting }) => {
+          initialValues={UserSigninInitialValues}
+          validationSchema={UserSignSchema}
+          onSubmit={async (values, { setSubmitting, setFieldError }) => {
             const response = await fetchUser(values.username);
             const isValidUser = await validateUser(response.data, values);
 
-         
-            // console.log('isValidUser:', isValidUser);
+            if (!isValidUser) {
+              setFieldError('password', 'Invalid user name or password');
+            }
+
+            console.log('response:', response);
+            console.log('isValidUser:', isValidUser);
 
             setTimeout(() => {
               setSubmitting(false);

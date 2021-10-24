@@ -1,5 +1,5 @@
 import dbConnect from '../../util/dbConnect';
-import User from '../../models/User';
+import User from '../../models/db/User';
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -18,10 +18,16 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const { username, email, password } = req.body?.params;
-        const userInDB = await User.findOne({ username, email });
+        const userNameInDB = await User.findOne({ username });
+        const userEmailInDB = await User.findOne({ email });
 
-        if (userInDB) {
-          res.status(200).json({ success: false, error: 'user exist' });
+        if (userNameInDB) {
+          res.status(200).json({ success: false, error: 'username exist' });
+          return;
+        }
+
+        if (userEmailInDB) {
+          res.status(200).json({ success: false, error: 'email exist' });
           return;
         }
 
