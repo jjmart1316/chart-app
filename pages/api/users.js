@@ -1,6 +1,5 @@
 import dbConnect from '../../util/dbConnect';
 import User from '../../models/User';
-import { hash } from 'bcryptjs';
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -17,22 +16,19 @@ export default async function handler(req, res) {
       break;
 
     case 'POST':
-
       try {
         const { username, email, password } = req.body?.params;
-        const secret = await hash(password, 12);
-        const query = await User.create({
-          username,
-          email,
-          password: secret,
-        });
+        const userInDB = await User.findOne({ username, email });
 
-        console.log('query:', query);
+        if (userInDB) {
+          res.status(200).json({ success: false, error: 'user exist' });
+          return;
+        }
 
+        const query = await User.create({ username, email, password });
         res.status(201).json({ success: true, query });
       } catch (error) {
-        console.log('error:', error);
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error });
       }
       break;
 
