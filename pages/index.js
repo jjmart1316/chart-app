@@ -9,7 +9,7 @@ const Home = () => {
       </Head>
       <main>
         <Link href='/stockChart'>
-          <a>Stock Chart</a>
+          Stock Chart
         </Link>
       </main>
     </div>

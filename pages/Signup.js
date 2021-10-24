@@ -7,15 +7,23 @@ import {
   Grid,
   Stack,
   LinearProgress,
-  Link,
+  Link
 } from '@mui/material';
-import styles from '../../styles/Signup.module.scss';
+import styles from '../styles/Signup.module.scss';
 import LockOutlined from '@mui/icons-material/LockOutlined';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import { deepPurple } from '@mui/material/colors';
+import axios from 'axios';
 
 const Signup = () => {
+
+  const createUser = async (user) => {
+    return await axios.post('api/users', { params: { ...user }});
+  }
+
+
+
   return (
     <Container maxWidth='xs'>
       <Box className={styles.outerBox}>
@@ -31,12 +39,23 @@ const Signup = () => {
       <Box className={styles.formContainer}>
         <Formik
           initialValues={{
+            username: '',
             email: '',
             password: '',
-            userName: '',
             confirmPassword: '',
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={ async (values, { setSubmitting }) => {
+
+            const response = await createUser(values);
+            console.log('response:', response);
+            
+
+
+
+
+
+
+
             setTimeout(() => {
               setSubmitting(false);
               alert(JSON.stringify(values, null, 2));
@@ -103,7 +122,7 @@ const Signup = () => {
               </Button>
               <Grid container className={styles.accountSignin} >
                 <Grid item>
-                  <Link href='#' variant='body2'>
+                  <Link href='/Signin' varian='body2'>
                     Already have an account? Sign in
                   </Link>
                 </Grid>

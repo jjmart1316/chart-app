@@ -13,9 +13,22 @@ import LockOutlined from '@mui/icons-material/LockOutlined';
 import { deepPurple } from '@mui/material/colors';
 import { Form, Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
-import styles from '../../styles/Signin.module.scss';
+import styles from '../styles/Signin.module.scss';
+import axios from 'axios';
+import { compare } from 'bcryptjs';
 
 const Signin = () => {
+  const fetchUser = async (username) => {
+    return await axios.get('api/users', { params: { username } });
+  };
+
+  const validateUser = async (data, inputValues) => {
+    if (!data.query) {
+      return false;
+    }
+    return await compare(inputValues?.password, data.query.password);
+  }
+
   return (
     <Container maxWidth='xs'>
       <Box className={styles.outerBox}>
@@ -34,10 +47,15 @@ const Signin = () => {
             username: '',
             password: '',
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting }) => {
+            const response = await fetchUser(values.username);
+            const isValidUser = await validateUser(response.data, values);
+
+         
+            // console.log('isValidUser:', isValidUser);
+
             setTimeout(() => {
               setSubmitting(false);
-              alert(JSON.stringify(values, null, 2));
             }, 500);
           }}
         >
@@ -84,7 +102,7 @@ const Signin = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href='#' variant='body2'>
+                  <Link href='/Signup' variant='body2'>
                     {`Don't have an account? Sign Up`}
                   </Link>
                 </Grid>

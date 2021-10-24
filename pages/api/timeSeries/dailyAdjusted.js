@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-const timeSeries = {
+const timeSeries = Object.freeze({
   metadata: 'Meta Data',
   information: '1. Information',
   symbol: '2. Symbol',
@@ -15,7 +15,7 @@ const timeSeries = {
   volume: '6. volume',
   dividendAmount: '7. dividend amount',
   splitCoefficient: '8. split coefficient',
-};
+});
 
 export default async function handler(req, res) {
   let metadata = {};
