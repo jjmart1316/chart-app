@@ -20,10 +20,12 @@ import {
   UserSignupInitialValues,
   UserSignupSchema,
 } from '../models/formValidations/User';
+import { useRouter } from 'next/router';
 
 const Signup = () => {
+  const router = useRouter();
   const createUser = async ({ username, email, password }) => {
-    return  axios.post('api/users', {
+    return axios.post('api/users', {
       params: { username, email, password: await hash(password, 12) },
     });
   };
@@ -44,10 +46,16 @@ const Signup = () => {
         <Formik
           initialValues={UserSignupInitialValues}
           validationSchema={UserSignupSchema}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting, setFieldError }) => {
+            const { data } = await createUser(values);
 
-            const response = await createUser(values);
-            console.log('response:', response);
+            if (data?.error) {
+              setFieldError(data.errorType, data.error);
+            }
+
+            if (!data?.error && data?.success) {
+              router.push('/stockChart');
+            }
 
             setTimeout(() => {
               setSubmitting(false);
@@ -119,7 +127,6 @@ const Signup = () => {
                   </Link>
                 </Grid>
               </Grid>
-              <pre>{JSON.stringify(props, null, 2)}</pre>
             </Form>
           )}
         </Formik>

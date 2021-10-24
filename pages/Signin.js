@@ -20,8 +20,10 @@ import {
   UserSigninInitialValues,
   UserSignSchema,
 } from '../models/formValidations/User';
+import { useRouter } from 'next/router';
 
 const Signin = () => {
+  const router = useRouter();
   const fetchUser = async (username) => {
     return axios.get('api/users', { params: { username } });
   };
@@ -32,7 +34,6 @@ const Signin = () => {
     }
     return compare(inputValues?.password, data.query.password);
   };
-
 
   return (
     <Container maxWidth='xs'>
@@ -58,8 +59,9 @@ const Signin = () => {
               setFieldError('password', 'Invalid user name or password');
             }
 
-            console.log('response:', response);
-            console.log('isValidUser:', isValidUser);
+            if (isValidUser) {
+              router.push('/stockChart');
+            }
 
             setTimeout(() => {
               setSubmitting(false);

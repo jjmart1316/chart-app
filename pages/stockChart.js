@@ -1,10 +1,12 @@
-import { Button, Container } from '@mui/material';
+import { Container } from '@mui/material';
+import Navigationbar from '../components/Navigationbar';
 import StockChart from '../components/Stockchart';
 import StockChartForm from '../components/StockChartForm';
 
 const stockChart = () => {
   return (
     <Container>
+      <Navigationbar />
       <StockChartForm>
         <StockChart />
       </StockChartForm>

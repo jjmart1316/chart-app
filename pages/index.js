@@ -1,16 +1,19 @@
 import Head from 'next/head';
-import Link from '@mui/material/Link';
+import Navigationbar from '../components/Navigationbar';
 
 const Home = () => {
+
   return (
     <div>
       <Head>
         <title>Home</title>
       </Head>
       <main>
-        <Link href='/stockChart'>
+        {/* <Link href='/stockChart'>
           Stock Chart
-        </Link>
+        </Link> */}
+
+        <Navigationbar />
       </main>
     </div>
   );

@@ -22,12 +22,12 @@ export default async function handler(req, res) {
         const userEmailInDB = await User.findOne({ email });
 
         if (userNameInDB) {
-          res.status(200).json({ success: false, error: 'username exist' });
+          res.status(200).json({ success: false, error: 'Sorry, that user name is already taken. Please choose another.', errorType: 'username' });
           return;
         }
 
         if (userEmailInDB) {
-          res.status(200).json({ success: false, error: 'email exist' });
+          res.status(200).json({ success: false, error: 'Sorry, that email is already taken. Please choose another.', errorType: 'email' });
           return;
         }
 
