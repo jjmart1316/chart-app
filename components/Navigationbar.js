@@ -1,4 +1,4 @@
-import { Typography, Link, AppBar, Toolbar, Box } from '@mui/material';
+import { Link, AppBar, Toolbar, Box } from '@mui/material';
 import styles from '../styles/Navigationbar.module.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ const Navigationbar = () => {
   const handleSignOut = async (e, path) => {
     e.preventDefault();
     await axios.delete('/api/session/logout');
-    setUser((prevState) => ({ ...prevState, isLoggedin: false }));
+    setUser(({ ...user, isLoggedin: false }));
     router.push(path);
   };
 
@@ -51,8 +51,7 @@ const Navigationbar = () => {
             {user.isLoggedin && (
               <Link
                 underline='hover'
-                href='/'
-                onClick={(e) => handleSignOut(e)}
+                onClick={(e) => handleSignOut(e, '/')}
               >
                 Sign out
               </Link>

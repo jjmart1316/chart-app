@@ -1,10 +1,6 @@
 import { withIronSession } from "next-iron-session";
 
 async function handler(req, res) {
-
-
-  console.log('req.query:', req.query)
-  // get user from database then:
   const { username, email, password } = req.query;
   req.session.set("user", {
     username,
