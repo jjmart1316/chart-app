@@ -1,4 +1,4 @@
-import { Breadcrumbs, Container, Typography, Link } from '@mui/material';
+import { Typography, Link, AppBar, Toolbar, Box } from '@mui/material';
 import styles from '../styles/Navigationbar.module.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -26,48 +26,41 @@ const Navigationbar = () => {
   const handleSignOut = async (e, path) => {
     e.preventDefault();
     await axios.delete('/api/session/logout');
-    setUser({ isLoggedin: false });
+    setUser((prevState) => ({ ...prevState, isLoggedin: false }));
     router.push(path);
   };
 
   return (
-    <Breadcrumbs className={styles.navigationbar}>
-      <Link
-        underline='hover'
-        color='inherit'
-        href='/'
-        onClick={() => console.log('clicked')}
-      >
-        <Typography color='text.primary' component='h1' variant='h5' >Home</Typography>
-      </Link>
-      {!user.isLoggedin && <SignIn />}
-      {!user.isLoggedin && <SignUp />}
-      {user.isLoggedin && (
-        <Link
-          underline='hover'
-          color='inherit'
-          onClick={(e) => handleSignOut(e, '/')}
-        >
-          <Typography color='text.primary' component='h1' variant='h5' >Sign out</Typography>
-        </Link>
-      )}
-    </Breadcrumbs>
-  );
-};
-
-const SignIn = () => {
-  return (
-    <Link underline='hover' color='inherit' href='/Signin'>
-      <Typography color='text.primary' component='h1' variant='h5' >Sign in</Typography>
-    </Link>
-  );
-};
-
-const SignUp = () => {
-  return (
-    <Link underline='hover' color='inherit' href='/Signup'>
-      <Typography color='text.primary' component='h1' variant='h5'>Sign up</Typography>
-    </Link>
+    <Box>
+      <AppBar color='transparent' position='static' className={styles.box}>
+        <Toolbar className={styles.linkContainer}>
+          <Box>
+            <Link underline='hover' href='/' className={styles.links}>
+              Home
+            </Link>
+            {!user.isLoggedin && (
+              <Link underline='hover' href='/Signin' className={styles.links}>
+                Sign in
+              </Link>
+            )}
+            {!user.isLoggedin && (
+              <Link underline='hover' href='/Signup' className={styles.links}>
+                Sign up
+              </Link>
+            )}
+            {user.isLoggedin && (
+              <Link
+                underline='hover'
+                href='/'
+                onClick={(e) => handleSignOut(e)}
+              >
+                Sign out
+              </Link>
+            )}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 

@@ -1,4 +1,13 @@
-.navigationbar {
+.linkContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  margin-right: 40px;
+}
+
+.links {
+  margin-right: 20px;
+}
+
+.box {
+  margin-bottom: 10px;
 }
