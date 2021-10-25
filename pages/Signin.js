@@ -35,6 +35,12 @@ const Signin = () => {
     return compare(inputValues?.password, data.query.password);
   };
 
+  const loginUser = async ({ username, email, password }) => {
+    return axios.get('api/session/login', {
+      params: { username, email, password },
+    });
+  };
+
   return (
     <Container maxWidth='xs'>
       <Box className={styles.outerBox}>
@@ -51,7 +57,7 @@ const Signin = () => {
         <Formik
           initialValues={UserSigninInitialValues}
           validationSchema={UserSignSchema}
-          onSubmit={async (values, { setSubmitting, setFieldError }) => {
+          onSubmit={async (values, { setFieldError }) => {
             const response = await fetchUser(values.username);
             const isValidUser = await validateUser(response.data, values);
 
@@ -60,12 +66,9 @@ const Signin = () => {
             }
 
             if (isValidUser) {
+              await loginUser(values);
               router.push('/stockChart');
             }
-
-            setTimeout(() => {
-              setSubmitting(false);
-            }, 500);
           }}
         >
           {(props) => (
