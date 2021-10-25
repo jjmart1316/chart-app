@@ -1,7 +1,8 @@
 import { withIronSession } from "next-iron-session";
 
-function handler(req, res, session) {
-  req.session.destroy();
+async function handler(req, res, session) {
+  await req.session.destroy();
+  res.send({ sucess: true });
 }
 
 export default withIronSession(handler, {
