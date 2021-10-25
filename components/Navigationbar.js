@@ -55,7 +55,6 @@ const Navigationbar = () => {
           )}
         </Breadcrumbs>
       </Container>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
     </Paper>
   );
 };

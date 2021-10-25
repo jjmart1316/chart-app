@@ -119,7 +119,6 @@ const Signin = () => {
                   </Link>
                 </Grid>
               </Grid>
-              <pre>{JSON.stringify(props, null, 2)}</pre>
             </Form>
           )}
         </Formik>
