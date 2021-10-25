@@ -1,4 +1,4 @@
-import { Breadcrumbs, Container, Paper, Typography, Link } from '@mui/material';
+import { Breadcrumbs, Container, Typography, Link } from '@mui/material';
 import styles from '../styles/Navigationbar.module.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -31,38 +31,34 @@ const Navigationbar = () => {
   };
 
   return (
-    <Paper>
-      <Container>
-        <Breadcrumbs className={styles.navigationbar}>
-          <Link
-            underline='hover'
-            color='inherit'
-            href='/'
-            onClick={() => console.log('clicked')}
-          >
-            <Typography color='text.primary'>Home</Typography>
-          </Link>
-          {!user.isLoggedin && <SignIn />}
-          {!user.isLoggedin && <SignUp />}
-          {user.isLoggedin && (
-            <Link
-              underline='hover'
-              color='inherit'
-              onClick={(e) => handleSignOut(e, '/')}
-            >
-              <Typography color='text.primary'>Sign out</Typography>
-            </Link>
-          )}
-        </Breadcrumbs>
-      </Container>
-    </Paper>
+    <Breadcrumbs className={styles.navigationbar}>
+      <Link
+        underline='hover'
+        color='inherit'
+        href='/'
+        onClick={() => console.log('clicked')}
+      >
+        <Typography color='text.primary' component='h1' variant='h5' >Home</Typography>
+      </Link>
+      {!user.isLoggedin && <SignIn />}
+      {!user.isLoggedin && <SignUp />}
+      {user.isLoggedin && (
+        <Link
+          underline='hover'
+          color='inherit'
+          onClick={(e) => handleSignOut(e, '/')}
+        >
+          <Typography color='text.primary' component='h1' variant='h5' >Sign out</Typography>
+        </Link>
+      )}
+    </Breadcrumbs>
   );
 };
 
 const SignIn = () => {
   return (
     <Link underline='hover' color='inherit' href='/Signin'>
-      <Typography color='text.primary'>Sign in</Typography>
+      <Typography color='text.primary' component='h1' variant='h5' >Sign in</Typography>
     </Link>
   );
 };
@@ -70,7 +66,7 @@ const SignIn = () => {
 const SignUp = () => {
   return (
     <Link underline='hover' color='inherit' href='/Signup'>
-      <Typography color='text.primary'>Sign up</Typography>
+      <Typography color='text.primary' component='h1' variant='h5'>Sign up</Typography>
     </Link>
   );
 };

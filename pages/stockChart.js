@@ -5,12 +5,14 @@ import StockChartForm from '../components/StockChartForm';
 
 const stockChart = () => {
   return (
-    <Container>
+    <>
       <Navigationbar />
-      <StockChartForm>
-        <StockChart />
-      </StockChartForm>
-    </Container>
+      <Container>
+        <StockChartForm>
+          <StockChart />
+        </StockChartForm>
+      </Container>
+    </>
   );
 };
 
