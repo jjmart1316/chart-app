@@ -26,40 +26,33 @@ const Navigationbar = () => {
   const handleSignOut = async (e, path) => {
     e.preventDefault();
     await axios.delete('/api/session/logout');
-    setUser(({ ...user, isLoggedin: false }));
+    setUser({ ...user, isLoggedin: false });
     router.push(path);
   };
 
   return (
-    <Box>
-      <AppBar color='transparent' position='static' className={styles.box}>
-        <Toolbar className={styles.linkContainer}>
-          <Box>
-            <Link underline='hover' href='/' className={styles.links}>
-              Home
-            </Link>
-            {!user.isLoggedin && (
-              <Link underline='hover' href='/Signin' className={styles.links}>
-                Sign in
-              </Link>
-            )}
-            {!user.isLoggedin && (
-              <Link underline='hover' href='/Signup' className={styles.links}>
-                Sign up
-              </Link>
-            )}
-            {user.isLoggedin && (
-              <Link
-                underline='hover'
-                onClick={(e) => handleSignOut(e, '/')}
-              >
-                Sign out
-              </Link>
-            )}
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar color='transparent' position='static'>
+      <Toolbar className={styles.container}>
+        <Link underline='hover' href='/' className={styles.links}>
+          Home
+        </Link>
+        {!user.isLoggedin && (
+          <Link underline='hover' href='/Signin' className={styles.links}>
+            Sign in
+          </Link>
+        )}
+        {!user.isLoggedin && (
+          <Link underline='hover' href='/Signup' className={styles.links}>
+            Sign up
+          </Link>
+        )}
+        {user.isLoggedin && (
+          <Link underline='hover' onClick={(e) => handleSignOut(e, '/')}>
+            Sign out
+          </Link>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
