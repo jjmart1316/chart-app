@@ -1,30 +1,27 @@
 import React from 'react';
-import { FormControl, InputLabel, MenuItem } from '@mui/material';
+import { MenuItem, Box } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import { Select } from 'formik-mui';
+import styles from '../styles/StockForm.module.scss';
+import StockChart from './Stockchart';
 
-const StockChartForm = ({ children }) => {
-  const wrapper = React.createRef();
+const StockChartForm = () => {
 
   return (
-    <div>
-      <div ref={wrapper}>{children}</div>
-
-      <div  className='stock-chart-form'>
+    <Box>
+      <Box><StockChart /></Box>
+      <Box  className={styles.outerBox}>
         <Formik
           initialValues={{
             timeSeries: '',
           }}
         >
-          {({ values }) => (
+          {(props) => (
             <Form>
-              <FormControl>
-                <InputLabel htmlFor='time-series-type'>
-                  Time Series Type
-                </InputLabel>
                 <Field
                   component={Select}
-                  style={{ width: 300 }}
+                  label='Time Series'
+                  style={{ width: 150 }}
                   name='timeSeries'
                   inputProps={{
                     id: 'timeSeries',
@@ -34,14 +31,12 @@ const StockChartForm = ({ children }) => {
                   <MenuItem value={'daily'}>Daily</MenuItem>
                   <MenuItem value={'dailyAdjusted'}>Daily Adjusted</MenuItem>
                 </Field>
-              </FormControl>
-
-              <pre>{JSON.stringify(values, null, 2)}</pre>
+              <pre>{JSON.stringify(props, null, 2)}</pre>
             </Form>
           )}
         </Formik>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

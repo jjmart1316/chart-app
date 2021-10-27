@@ -1,4 +1,4 @@
-import { Link, AppBar, Toolbar, Box } from '@mui/material';
+import { Link, AppBar, Toolbar } from '@mui/material';
 import styles from '../styles/Navigationbar.module.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -31,7 +31,7 @@ const Navigationbar = () => {
   };
 
   return (
-    <AppBar color='transparent' position='static'>
+    <AppBar color='transparent' position='static' className={styles.appBar}>
       <Toolbar className={styles.container}>
         <Link underline='hover' href='/' className={styles.links}>
           Home

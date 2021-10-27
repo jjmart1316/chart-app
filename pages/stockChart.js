@@ -1,15 +1,13 @@
+import { Box } from '@mui/system';
 import Navigationbar from '../components/Navigationbar';
-import StockChart from '../components/Stockchart';
 import StockChartForm from '../components/StockChartForm';
 
 const stockChart = () => {
   return (
-    <>
+    <Box>
       <Navigationbar />
-        <StockChartForm>
-          <StockChart />
-        </StockChartForm>
-    </>
+      <StockChartForm />
+    </Box>
   );
 };
 
