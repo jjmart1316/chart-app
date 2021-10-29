@@ -1,10 +1,9 @@
-import { Link, AppBar, Toolbar } from '@mui/material';
+import { AppBar, Toolbar } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import Link from '../components/Link'
 
 const Navigationbar = () => {
-  const router = useRouter();
   const [user, setUser] = useState({
     username: '',
     email: '',
@@ -21,13 +20,6 @@ const Navigationbar = () => {
     };
     getSessionUser();
   }, []);
-
-  const handleSignOut = async (e, path) => {
-    e.preventDefault();
-    await axios.delete('/api/session/logout');
-    setUser({ ...user, isLoggedin: false });
-    router.push(path);
-  };
 
   return (
     <AppBar color='transparent' position='static' sx={{ mb: 2 }}>
@@ -46,7 +38,7 @@ const Navigationbar = () => {
           </Link>
         )}
         {user.isLoggedin && (
-          <Link underline='hover' onClick={(e) => handleSignOut(e, '/')} sx={{ mx: 2 }}>
+          <Link underline='hover' href='/' onClick={ async () => axios.delete('/api/session/logout')} sx={{ mx: 2 }}>
             Sign out
           </Link>
         )}
