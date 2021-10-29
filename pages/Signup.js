@@ -7,9 +7,9 @@ import {
   Grid,
   Stack,
   LinearProgress,
-  Link,
 } from '@mui/material';
 import styles from '../styles/Signup.module.scss';
+import Link from '../components/Link';
 import LockOutlined from '@mui/icons-material/LockOutlined';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';

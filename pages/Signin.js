@@ -1,5 +1,4 @@
 import {
-  Link,
   Button,
   Container,
   Box,
@@ -9,6 +8,7 @@ import {
   Grid,
   LinearProgress,
 } from '@mui/material';
+import Link from '../components/Link';
 import LockOutlined from '@mui/icons-material/LockOutlined';
 import { deepPurple } from '@mui/material/colors';
 import { Form, Formik, Field } from 'formik';
@@ -65,8 +65,8 @@ const Signin = () => {
               setFieldError('password', 'Invalid user name or password');
             }
 
-            if (isValidUser) {
-              await loginUser(values);
+            if (isValidUser && response.data) {
+              await loginUser(response.data.query);
               router.push('/stockChart');
             }
           }}
@@ -97,6 +97,7 @@ const Signin = () => {
                 </Grid>
               </Grid>
               {props.isSubmitting && <LinearProgress />}
+
               <Button
                 className={styles.submitButton}
                 type='submit'
@@ -107,12 +108,8 @@ const Signin = () => {
               >
                 Sign In
               </Button>
+
               <Grid container>
-                <Grid item xs>
-                  <Link href='#' variant='body2'>
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link href='/Signup' variant='body2'>
                     {`Don't have an account? Sign Up`}
