@@ -1,5 +1,4 @@
 import { Link, AppBar, Toolbar } from '@mui/material';
-import styles from '../styles/Navigationbar.module.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -31,23 +30,23 @@ const Navigationbar = () => {
   };
 
   return (
-    <AppBar color='transparent' position='static' className={styles.appBar}>
-      <Toolbar className={styles.container}>
-        <Link underline='hover' href='/' className={styles.links}>
+    <AppBar color='transparent' position='static' sx={{ mb: 2 }}>
+      <Toolbar>
+        <Link underline='hover' href='/' sx={{ flexGrow: 1 }}>
           Home
         </Link>
         {!user.isLoggedin && (
-          <Link underline='hover' href='/Signin' className={styles.links}>
+          <Link underline='hover' href='/Signin' sx={{ mx: 2 }}>
             Sign in
           </Link>
         )}
         {!user.isLoggedin && (
-          <Link underline='hover' href='/Signup' className={styles.links}>
+          <Link underline='hover' href='/Signup' sx={{ mx: 2 }}>
             Sign up
           </Link>
         )}
         {user.isLoggedin && (
-          <Link underline='hover' onClick={(e) => handleSignOut(e, '/')}>
+          <Link underline='hover' onClick={(e) => handleSignOut(e, '/')} sx={{ mx: 2 }}>
             Sign out
           </Link>
         )}
