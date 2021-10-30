@@ -20,7 +20,6 @@ import {
   UserSigninInitialValues,
   UserSignSchema
 } from '../models/formValidations/User';
-import styles from '../styles/Signin.module.scss';
 
 const Signin = () => {
   const router = useRouter();
@@ -40,8 +39,15 @@ const Signin = () => {
 
   return (
     <Container maxWidth='xs'>
-      <Box className={styles.outerBox}>
-        <Stack direction='row' spacing={2}>
+      <Box
+        sx={{
+          mt: 20,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Stack>
           <Avatar sx={{ bgcolor: deepPurple[500] }}>
             <LockOutlined />
           </Avatar>
@@ -50,7 +56,7 @@ const Signin = () => {
           Sign In
         </Typography>
       </Box>
-      <Box className={styles.formContainer}>
+      <Box sx={{ mt: 3 }}>
         <Formik
           initialValues={UserSigninInitialValues}
           validationSchema={UserSignSchema}
@@ -64,7 +70,7 @@ const Signin = () => {
 
             if (isValidUser) {
               await loginUser(user.data);
-              await router.push('/stockChart');
+              router.push('/stockChart');
             }
           }}
         >
@@ -96,7 +102,7 @@ const Signin = () => {
               {props.isSubmitting && <LinearProgress />}
 
               <Button
-                className={styles.submitButton}
+                sx={{ mt: 2 }}
                 type='submit'
                 fullWidth
                 variant='contained'
@@ -105,14 +111,9 @@ const Signin = () => {
               >
                 Sign In
               </Button>
-
-              <Grid container>
-                <Grid item>
-                  <Link href='/Signup' variant='body2'>
-                    {`Don't have an account? Sign Up`}
-                  </Link>
-                </Grid>
-              </Grid>
+              <Link href='/Signup' variant='body2'>
+                {`Don't have an account? Sign Up`}
+              </Link>
             </Form>
           )}
         </Formik>

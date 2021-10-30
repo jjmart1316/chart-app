@@ -1,26 +1,25 @@
-import {
-  Button,
-  Box,
-  Container,
-  Avatar,
-  Typography,
-  Grid,
-  Stack,
-  LinearProgress,
-} from '@mui/material';
-import styles from '../styles/Signup.module.scss';
-import Link from '../components/Link';
 import LockOutlined from '@mui/icons-material/LockOutlined';
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  LinearProgress,
+  Stack,
+  Typography
+} from '@mui/material';
+import { deepPurple } from '@mui/material/colors';
+import axios from 'axios';
+import { hash } from 'bcryptjs';
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
-import { deepPurple } from '@mui/material/colors';
-import { hash } from 'bcryptjs';
-import axios from 'axios';
+import { useRouter } from 'next/router';
+import Link from '../components/Link';
 import {
   UserSignupInitialValues,
-  UserSignupSchema,
+  UserSignupSchema
 } from '../models/formValidations/User';
-import { useRouter } from 'next/router';
 
 const Signup = () => {
   const router = useRouter();
@@ -39,8 +38,15 @@ const Signup = () => {
 
   return (
     <Container maxWidth='xs'>
-      <Box className={styles.outerBox}>
-        <Stack direction='row' spacing={2}>
+      <Box
+        sx={{
+          mt: 20,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Stack>
           <Avatar sx={{ bgcolor: deepPurple[500] }}>
             <LockOutlined />
           </Avatar>
@@ -49,7 +55,7 @@ const Signup = () => {
           Sign up
         </Typography>
       </Box>
-      <Box className={styles.formContainer}>
+      <Box sx={{ mt: 3 }}>
         <Formik
           initialValues={UserSignupInitialValues}
           validationSchema={UserSignupSchema}
@@ -115,7 +121,7 @@ const Signup = () => {
               </Grid>
               {props.isSubmitting && <LinearProgress />}
               <Button
-                className={styles.submitButton}
+                sx={{ mt: 2 }}
                 type='submit'
                 fullWidth
                 variant='contained'
@@ -124,13 +130,9 @@ const Signup = () => {
               >
                 Sign Up
               </Button>
-              <Grid container className={styles.accountSignin}>
-                <Grid item>
-                  <Link href='/Signin' varian='body2'>
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
+              <Link href='/Signin' varian='body2'>
+                Already have an account? Sign in
+              </Link>
             </Form>
           )}
         </Formik>

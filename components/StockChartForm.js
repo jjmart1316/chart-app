@@ -1,36 +1,36 @@
+import { Box } from '@mui/material';
+import { Form, Formik } from 'formik';
 import React from 'react';
-import { MenuItem, Box } from '@mui/material';
-import { Field, Form, Formik } from 'formik';
-import { Select } from 'formik-mui';
-import styles from '../styles/StockForm.module.scss';
+import { AutoComplete } from '../components/formik/Autocomple';
+import { symbols, timeSeries, timeSeriesLabels } from '../staticData/stockValues';
+import { Selection } from './formik/Selection';
 import StockChart from './Stockchart';
 
 const StockChartForm = () => {
-
   return (
     <Box>
-      <Box><StockChart /></Box>
-      <Box  className={styles.outerBox}>
+      <StockChart />
+      <Box sx={{ mt: 1 }}>
         <Formik
           initialValues={{
             timeSeries: '',
+            symbols: null,
           }}
         >
           {(props) => (
             <Form>
-                <Field
-                  component={Select}
-                  label='Time Series'
-                  style={{ width: 150 }}
-                  name='timeSeries'
-                  inputProps={{
-                    id: 'timeSeries',
-                    name: 'timeSeries',
-                  }}
-                >
-                  <MenuItem value={'daily'}>Daily</MenuItem>
-                  <MenuItem value={'dailyAdjusted'}>Daily Adjusted</MenuItem>
-                </Field>
+              <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                <Selection
+                  fieldProps={timeSeriesLabels}
+                  displayProps={timeSeries}
+                />
+                <AutoComplete
+                  fieldProps={{ name: 'symbols', id: 'symbols' }}
+                  autoCompleteList={symbols}
+                  textFieldProps={{ label: 'Symbols' }}
+                  formikProps={props}
+                />
+              </Box>
               <pre>{JSON.stringify(props, null, 2)}</pre>
             </Form>
           )}

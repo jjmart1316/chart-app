@@ -1,4 +1,15 @@
-export const companies = [
+export const timeSeries = {
+  TIME_SERIES_DAILY: 'Daily',
+  TIME_SERIES_WEEKLY: 'Weekly',
+  TIME_SERIES_MONTHLY: 'Monthly',
+};
+
+export const timeSeriesLabels = {
+  label: 'Time Series',
+  name: 'timeSeries',
+};
+
+export const symbols = [
   {
     'Company Name':
       'iShares MSCI All Country Asia Information Technology Index Fund',
