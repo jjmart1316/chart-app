@@ -1,11 +1,12 @@
-import { withIronSession } from "next-iron-session";
+import { withIronSession } from 'next-iron-session';
 
 async function handler(req, res) {
-  const { username, email, password } = req.query;
-  req.session.set("user", {
+  const { username, email, password, _id } = req.query;
+  req.session.set('user', {
     username,
     email,
     password,
+    _id,
     isLoggedin: true,
   });
   await req.session.save();
@@ -17,6 +18,6 @@ export default withIronSession(handler, {
   cookieName: process.env.NEXT_IRON_COOKIENAME,
   // if your localhost is served on http:// then disable the secure flag
   cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === 'production',
   },
 });

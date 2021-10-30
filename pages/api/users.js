@@ -8,8 +8,8 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        const query = await User.findOne({ username: req.query.username });
-        res.status(200).json({ success: true, query });
+        const { username, email, password, _id} = await User.findOne({ username: req.query.username });
+        res.status(200).json({ success: true, username, email, password, _id });
       } catch (error) {
         res.status(400).json({ success: false });
       }
